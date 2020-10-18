@@ -68,6 +68,21 @@ class App extends CI_Controller {
         echo hitung_umur($tgl_lahir);
     }
 
+    public function update_konfirmasi($id_antrian)
+    {
+        $this->db->where('id_antrian', $id_antrian);
+        $simpan = $this->db->update('antrian', array('konfirmasi'=>'y','date_konfirmasi'=>get_waktu()));
+        if ($simpan) {
+            $this->session->set_flashdata('message', alert_biasa('Terima kasih sudah melakukan konfirmasi !','success'));
+            if ($this->session->userdata('level') == 'user') {
+                redirect('app/daftar_pasien','refresh');
+            } else {
+                redirect('antrian','refresh');
+            }
+            
+        }
+    }
+
     public function cetak()
 	{
         if ($this->session->userdata('level') == '') {

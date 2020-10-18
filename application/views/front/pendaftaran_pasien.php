@@ -67,6 +67,9 @@
 
 <div class="row">
 	<div class="col-md-12">
+		<div class="table-responsive">
+			
+		
 		<button class="btn btn-warning btn-block" disabled="">NO ANTRIAN</button><br>
 		<table class="table table-bordered" id="example1">
 			<thead>
@@ -95,12 +98,17 @@
 					<td><?php echo $rw->nama ?></td>
 					<td><?php echo hitung_umur($rw->tanggal_lahir) ?></td>
 					<td>
-						<a href="" class="btn btn-sm btn-warning">Konfirmasi</a>
+						<?php if ($rw->konfirmasi == 't'): ?>
+							<a onclick="javasciprt: return confirm('Apakah kamu yakin ?')" href="app/update_konfirmasi/<?php echo $rw->id_antrian ?>" class="btn btn-sm btn-warning">Konfirmasi</a>
+						<?php else: ?>
+							<span class="label label-success">Sudah dikonfirmasi</span>
+						<?php endif ?>
 					</td>
 				</tr>
 				<?php $no++; } ?>
 			</tbody>
 		</table>
+		</div>
 	</div>
 </div>
 

@@ -53,7 +53,7 @@
 			<td style="text-align:center" width="200px">
 
                 <?php if ($antrian->konfirmasi == 't'): ?>
-                    <a href="" class="label label-warning">Konfirmasi</a>
+                    <a onclick="javasciprt: return confirm('Apakah kamu yakin ?')" href="app/update_konfirmasi/<?php echo $antrian->id_antrian ?>" class="label label-warning">Konfirmasi</a>
                 <?php endif ?>
 				<?php 
 				echo anchor(site_url('antrian/update/'.$antrian->id_antrian),'<span class="label label-info">Ubah</span>'); 
