@@ -38,8 +38,8 @@
         <li><a href="pembayaran"><i class="fa fa-money"></i> <span>Transaksi Pembayaran </span></a></li>
         <li><a href="app/cetak"><i class="fa fa-print"></i> <span>Cetak Laporan </span></a></li>
         <li><a href="a_user"><i class="fa fa-users"></i> <span>Data User </span></a></li>
-        <li><a href="a_user"><i class="fa fa-database"></i> <span>Back Up Data </span></a></li>
-        <li><a href="a_user"><i class="fa fa-file"></i> <span>Restore Data </span></a></li>
+        <li><a href="#"><i class="fa fa-database"></i> <span>Back Up Data </span></a></li>
+        <li><a href="#"><i class="fa fa-file"></i> <span>Restore Data </span></a></li>
 
         <?php } elseif ($this->session->userdata('level') == 'user') {?>
 
