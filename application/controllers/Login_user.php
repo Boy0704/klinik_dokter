@@ -9,7 +9,7 @@ class Login_user extends CI_Controller {
 		if ($this->session->userdata('level') == 'user') {
 			redirect('app','refresh');
 		} else {
-			$this->load->view('Login_user');
+			$this->load->view('login_user');
 		}
 		
 	}
