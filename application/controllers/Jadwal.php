@@ -72,7 +72,8 @@ class Jadwal extends CI_Controller
 	    'id_jadwal' => set_value('id_jadwal'),
 	    'hari' => set_value('hari'),
 	    'dari' => set_value('dari'),
-	    'sampai' => set_value('sampai'),
+        'sampai' => set_value('sampai'),
+	    'dokter' => set_value('dokter'),
 	);
         $this->load->view('v_index', $data);
     }
@@ -87,7 +88,8 @@ class Jadwal extends CI_Controller
             $data = array(
 		'hari' => $this->input->post('hari',TRUE),
 		'dari' => $this->input->post('dari',TRUE),
-		'sampai' => $this->input->post('sampai',TRUE),
+        'sampai' => $this->input->post('sampai',TRUE),
+		'dokter' => $this->input->post('dokter',TRUE),
 	    );
 
             $this->Jadwal_model->insert($data);
@@ -109,7 +111,8 @@ class Jadwal extends CI_Controller
 		'id_jadwal' => set_value('id_jadwal', $row->id_jadwal),
 		'hari' => set_value('hari', $row->hari),
 		'dari' => set_value('dari', $row->dari),
-		'sampai' => set_value('sampai', $row->sampai),
+        'sampai' => set_value('sampai', $row->sampai),
+		'dokter' => set_value('dokter', $row->dokter),
 	    );
             $this->load->view('v_index', $data);
         } else {
@@ -128,7 +131,8 @@ class Jadwal extends CI_Controller
             $data = array(
 		'hari' => $this->input->post('hari',TRUE),
 		'dari' => $this->input->post('dari',TRUE),
-		'sampai' => $this->input->post('sampai',TRUE),
+        'sampai' => $this->input->post('sampai',TRUE),
+		'dokter' => $this->input->post('dokter',TRUE),
 	    );
 
             $this->Jadwal_model->update($this->input->post('id_jadwal', TRUE), $data);

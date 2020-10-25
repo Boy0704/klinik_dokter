@@ -1,5 +1,109 @@
 <?php 
 
+function superman()
+{
+  if (strpos(siteURL(),'://localhost')){
+    return true;
+  }else {
+    return false;
+  }
+}
+
+function siteURL() {
+  $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+  $domainName = $_SERVER['HTTP_HOST'] . '/';
+  return $protocol . $domainName;
+}
+
+function api($value)
+{
+	if ($value == 'login_fb') {
+		return '255436962206721, 07348b9734248bb5d93b4a4a40c012d8';
+	} elseif ($value == 'login_google') {
+		return '514260896239-7gsm0vuljlcpf2m1qs1qr308isotqe64.apps.googleusercontent.com, H_JIU-RVp23IyVJ32lUNuqK9';
+	}
+}
+
+function kirim_email($subject,$pesan,$email_to)
+{
+	$CI =& get_instance();
+	$config = [
+        'mailtype'  => 'html',
+        'charset'   => 'utf-8',
+        'protocol'  => 'smtp',
+        'smtp_host' => 'smtp.gmail.com',
+        'smtp_user' => get_data('setting','nama','email_pengirim','value'),  // Email gmail
+        'smtp_pass'   => get_data('setting','nama','password_pengirim','value'),  // Password gmail
+        'smtp_crypto' => 'tls',
+        'smtp_port'   => 587,
+        'crlf'    => "\r\n",
+        'newline' => "\r\n"
+    ];
+
+    // Load library email dan konfigurasinya
+    $CI->email->initialize($config);  
+  
+	$CI->email->set_newline("\r\n"); 
+
+    // Email dan nama pengirim
+    $CI->email->from('test@dokterarief.com', 'Klinik Dokter');
+
+    // Email penerima
+    $CI->email->to($email_to); // Ganti dengan email tujuan
+
+    // Lampiran email, isi dengan url/path file
+    // $CI->email->attach('https://masrud.com/content/images/20181215150137-codeigniter-smtp-gmail.png');
+
+    // Subject email
+    $CI->email->subject($subject);
+
+    // Isi email
+    $CI->email->message($pesan);
+
+    // Tampilkan pesan sukses atau error
+    if ($CI->email->send()) {
+        return 'Sukses! email berhasil dikirim.';
+    } else {
+    	
+    	return $CI->email->print_debugger();
+    }
+}
+
+function list_date() {
+
+	$tgl1 = date('Y-m-d');// pendefinisian tanggal awal
+	$tgl2 = date('Y-m-d', strtotime('+7 days', strtotime($tgl1)));
+
+    $start    = new DateTime($tgl1);
+	$end      = new DateTime($tgl2);
+	$interval = DateInterval::createFromDateString('1 day');
+	$period   = new DatePeriod($start, $interval, $end);
+
+	// foreach ($period as $dt)
+	// {
+	//     echo $dt->format("l Y-m-d");
+	//     echo "<br>";
+	// }
+
+	return $period;
+}
+
+function cek_hari($date)
+{
+	$daftar_hari = array(
+		'Sunday' => 'Minggu',
+		'Monday' => 'Senin',
+		'Tuesday' => 'Selasa',
+		'Wednesday' => 'Rabu',
+		'Thursday' => 'Kamis',
+		'Friday' => 'Jumat',
+		'Saturday' => 'Sabtu'
+	);
+	$namahari = date('l', strtotime($date));
+
+	return $daftar_hari[$namahari];
+}
+
 function kode_urut()
 {
 	error_reporting(0);
@@ -35,7 +139,7 @@ function hitung_umur($tgl_lahir)
 	$d = $today->diff($tanggal)->d;
 	//echo "Umur: " . $y . " tahun " . $m . " bulan " . $d . " hari";
 
-	return $y;
+	return $y . " tahun " . $m . " bulan " . $d . " hari";
 }
 
 function total_modal_produk($no_penjualan)
@@ -111,16 +215,16 @@ function cek_return($n,$no)
 	}
 }
 
-function create_random($length)
-{
-    $data = 'ABCDEFGHIJKLMNOPQRSTU1234567890';
-    $string = '';
-    for($i = 0; $i < $length; $i++) {
-        $pos = rand(0, strlen($data)-1);
-        $string .= $data{$pos};
-    }
-    return $string;
-}
+// function create_random($length)
+// {
+//     $data = 'ABCDEFGHIJKLMNOPQRSTU1234567890';
+//     $string = '';
+//     for($i = 0; $i < $length; $i++) {
+//         $pos = rand(0, strlen($data)-1);
+//         $string .= $data{$pos};
+//     }
+//     return $string;
+// }
 
 function upload_gambar_biasa($nama_gambar, $lokasi_gambar, $tipe_gambar, $ukuran_gambar, $name_file_form)
 {

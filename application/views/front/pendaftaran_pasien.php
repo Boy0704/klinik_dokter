@@ -1,143 +1,163 @@
 <div class="row">
-	<div class="col-md-6">
-		<form action="app/simpan_pendaftaran" method="POST">
-			<div class="form-group">
-				<label>Nama Pasien (Bayi/Anak) </label>
-				<input type="text" name="nama" class="form-control">
-			</div>
-			<div class="form-group">
-				<label>Jenis Kelamin </label>
-				<div class="radio">
-				  <label><input type="radio" name="jenis_kelamin" value="L" >Laki-laki</label>
-				  <span style="margin-left: 20px;"></span>
-				  <label><input type="radio" name="jenis_kelamin" value="P" >Perempuan</label>
-				</div>
-			</div>
-			<div class="form-group">
-				<label>Tgl Lahir </label>
-				<input type="date" name="tgl_lahir" id="tgl_lahir" class="form-control">
-			</div>
-			<div class="form-group">
-				<label>Nama Ayah </label>
-				<input type="text" name="nama_ayah" class="form-control" id="nama_ayah">
-			</div>
-			<div class="form-group">
-				<label>Nama Ibu </label>
-				<input type="text" name="nama_ibu" class="form-control" id="nama_ibu">
-			</div>
-			<div class="form-group">
-				<label>Alamat </label>
-				<input type="text" name="alamat" class="form-control">
-			</div>
-			<div class="form-group">
-				<label>No Telp Rumah </label>
-				<input type="text" name="no_telp" class="form-control">
-			</div>
-			<div class="form-group">
-				<label>No Handphone / WA </label>
-				<input type="text" name="no_hp" class="form-control">
-			</div>
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary">SIMPAN</button>
-			</div>
-		</form>
-	</div>
-	<div class="col-md-6">
-		<button class="btn btn-info btn-block" disabled="">JADWAL KLINIK</button><br>
-		<table class="table table-stripped">
-			<thead>
-				<tr>
-					<th>Hari</th>
-					<th>Jam Mulai</th>
-					<th>Jam Selesai</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach ($this->db->get('jadwal')->result() as $br): ?>
-				<tr>
-					<td><?php echo $br->hari ?></td>
-					<td><?php echo $br->dari ?></td>
-					<td><?php echo $br->sampai ?></td>
-				</tr>
-				<?php endforeach ?>
-			</tbody>
-		</table>
-	</div>
-</div>
-
-<div class="row">
 	<div class="col-md-12">
-		<div class="table-responsive">
-			
-		
-		<button class="btn btn-warning btn-block" disabled="">NO ANTRIAN</button><br>
-		<table class="table table-bordered" id="example1">
-			<thead>
-				<tr>
-					<th>No.</th>
-					<th>No Antrian</th>
-					<th>Nama Pasien</th>
-					<th>Umur</th>
-					<th>Pilihan</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php 
+		<ul class="nav nav-tabs">
+		    <li class="active"><a data-toggle="tab" href="#home">Peserta</a></li>
+		    <li><a data-toggle="tab" href="#menu1">No Antrian</a></li>
+		  </ul>
 
-				$no = 1;
-				$this->db->select('b.nama,a.*,b.tanggal_lahir');
-				$this->db->join('antrian a', 'a.id_pasien = b.id_pasien', 'inner');
-				$pasien = $this->db->get('pasien b');
-				foreach ($pasien->result() as $rw) {
-				 ?>
-				<tr>
-					<td><?php echo $no; ?></td>
-					<td>
-						<button class="btn btn-info"><?php echo $rw->no_antrian ?></button>
-					</td>
-					<td><?php echo $rw->nama ?></td>
-					<td><?php echo hitung_umur($rw->tanggal_lahir) ?></td>
-					<td>
-						<?php if ($rw->konfirmasi == 't'): ?>
-							<a onclick="javasciprt: return confirm('Apakah kamu yakin ?')" href="app/update_konfirmasi/<?php echo $rw->id_antrian ?>" class="btn btn-sm btn-warning">Konfirmasi</a>
-						<?php else: ?>
-							<span class="label label-success">Sudah dikonfirmasi</span>
-						<?php endif ?>
-					</td>
-				</tr>
-				<?php $no++; } ?>
-			</tbody>
-		</table>
-		</div>
+		  <div class="tab-content">
+		    <div id="home" class="tab-pane fade in active">
+		    	<br>
+		    	<a href="app/tambah_peserta" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Peserta</a>
+
+		    	<br><br>
+		    	<div class="table-responsive">
+		
+				<button class="btn btn-warning btn-block" disabled="">PESERTA</button><br>
+				<table class="table table-bordered" id="example1">
+					<thead>
+						<tr>
+							<th>No.</th>
+							<th>Nama Peserta</th>
+							<th>Umur</th>
+							<th>Pilihan</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php 
+
+						$no = 1;
+						$this->db->where('id_member', $this->session->userdata('id_user'));
+						$this->db->where('aktif','1');
+						$this->db->order_by('id_pasien', 'desc');
+						$pasien = $this->db->get('pasien');
+						foreach ($pasien->result() as $rw) {
+						 ?>
+						<tr>
+							<td><?php echo $no; ?></td>
+							<td><?php echo $rw->nama. $retVal = ($rw->nama == $this->session->userdata('nama')) ? ' (Penanggung Jawab)' : '' ; ?></td>
+							<td><?php echo hitung_umur($rw->tanggal_lahir) ?></td>
+							<td>
+								<a href="app/jadwal_dokter/<?php echo $rw->id_pasien ?>" class="label label-info">Pilih Jadwal Kunjungan</a>
+
+								
+
+								<a href="" data-toggle="modal" data-target="#<?php echo $rw->id_pasien ?>mDetail" class="label label-success">Detail</a>
+
+								<!-- Modal -->
+								<div class="modal fade" id="<?php echo $rw->id_pasien ?>mDetail" role="dialog">
+								<div class="modal-dialog">
+
+								  <!-- Modal content-->
+								  <div class="modal-content">
+								    <div class="modal-header">
+								      <button type="button" class="close" data-dismiss="modal">&times;</button>
+								      <h4 class="modal-title">Detail Peserta</h4>
+								    </div>
+								    <div class="modal-body">
+								    	<?php $dt = $this->db->get_where('pasien', array('id_pasien'=>$rw->id_pasien))->row(); ?>
+								    	<table class="table">
+								    		<tr>
+								    			<td>Nama</td>
+								    			<td><?php echo $dt->nama ?></td>
+								    		</tr>
+								    		<tr>
+								    			<td>Tanggal Lahir</td>
+								    			<td><?php echo $dt->tanggal_lahir ?></td>
+								    		</tr>
+								    		<tr>
+								    			<td>Jenis Kelamin</td>
+								    			<td><?php echo $dt->jenis_kelamin ?></td>
+								    		</tr>
+								    		<tr>
+								    			<td>Nama Ayah</td>
+								    			<td><?php echo $dt->nama_ayah ?></td>
+								    		</tr>
+								    		<tr>
+								    			<td>Nama Ibu</td>
+								    			<td><?php echo $dt->nama_ibu ?></td>
+								    		</tr>
+								    		<tr>
+								    			<td>Alamat</td>
+								    			<td><?php echo $dt->alamat ?></td>
+								    		</tr>
+								    		<tr>
+								    			<td>No Telp/ WA</td>
+								    			<td><?php echo $dt->no_telp ?></td>
+								    		</tr>
+								    	</table>
+								    </div>
+								    <div class="modal-footer">
+								      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								    </div>
+								  </div>
+								  
+								</div>
+								</div>
+
+								<a onclick="javasciprt: return confirm('Apakah kamu yakin ?')" href="app/hapus_peserta/<?php echo $rw->id_pasien ?>" class="label label-danger">Hapus</a>
+							</td>
+						</tr>
+						<?php $no++; } ?>
+					</tbody>
+				</table>
+				</div>
+
+		      
+		    </div>
+		    <div id="menu1" class="tab-pane fade">
+				<div class="table-responsive">
+		
+				<button class="btn btn-warning btn-block" disabled="">DAFTAR ANTRIAN</button><br>
+				<table class="table table-bordered" id="example1">
+					<thead>
+						<tr>
+							<th>No.</th>
+							<th>Nama Pasien</th>
+							<th>Umur</th>
+							<th>Tanggal Kunjungan</th>
+							<th>Pilihan</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php 
+
+						$no = 1;
+						$this->db->select('b.nama,a.*,b.tanggal_lahir');
+						$this->db->join('antrian a', 'a.id_pasien = b.id_pasien', 'inner');
+						$this->db->where('tgl_kunjungan!=', '');
+						$this->db->order_by('id_antrian', 'desc');
+						$pasien = $this->db->get('pasien b');
+						foreach ($pasien->result() as $rw) {
+						 ?>
+						<tr>
+							<td><?php echo $no; ?></td>
+							<td><?php echo $rw->nama ?></td>
+							<td><?php echo hitung_umur($rw->tanggal_lahir) ?></td>
+							<td><?php echo $rw->tgl_kunjungan ?></td>
+							<td>
+								<?php if ($rw->konfirmasi == 't'): ?>
+									<a onclick="javasciprt: return confirm('Pastikan nomor whatsapp/HP utama benar dan sudah update agar dapat dihubungi beserta kolom notes input untuk admin ?')" href="app/update_konfirmasi/<?php echo $rw->id_antrian ?>/y" class="label label-success">Konfirmasi</a>
+								<?php else: ?>
+									<a onclick="javasciprt: return confirm('Apakah kamu yakin ?')" href="app/update_konfirmasi/<?php echo $rw->id_antrian ?>/t" class="label label-warning">Batal Konfirmasi</a>
+									<a href="app/lihat_semua_antrian/<?php echo $rw->id_jadwal.'/'.$rw->tgl_kunjungan ?>" class="label label-info">Lihat Semua Antrian</a>
+								<?php endif ?>
+							</td>
+						</tr>
+						<?php $no++; } ?>
+					</tbody>
+				</table>
+				</div>
+		    </div>
+		    
+		  </div>
 	</div>
 </div>
 
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#tgl_lahir").change(function(event) {
-			var tgl_lahir = $(this).val();
-			$.ajax({
-				url: 'app/cek_umur',
-				type: 'POST',
-				dataType: 'html',
-				data: {tgl_lahir: tgl_lahir},
-			})
-			.done(function(hasil) {
-				console.log("success");
-				console.log(hasil);
-				if (hasil > 18) {
-					$('#nama_ayah').prop('readonly', true);
-					$('#nama_ibu').prop('readonly', true);
-				}
-			})
-			.fail(function() {
-				console.log("error");
-			})
-			.always(function() {
-				console.log("complete");
-			});
-			
-		});
-	});
-</script>
+
+
+
+
+
+

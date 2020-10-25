@@ -1,6 +1,6 @@
 <?php
 include_once APPPATH.'/functions/sosmed/Google/autoload.php'; // panggil autoload dari Facebook SDK
-$log_g = explode(", ", api('Login Google'));
+$log_g = explode(", ", api('login_google'));
 $client_id = $log_g[0];
 $secret_id = $log_g[1];
 

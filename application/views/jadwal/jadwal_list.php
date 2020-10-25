@@ -33,6 +33,7 @@
         <table class="table table-bordered" style="margin-bottom: 10px">
             <tr>
                 <th>No</th>
+        <th>Dokter</th>
 		<th>Hari</th>
 		<th>Dari</th>
 		<th>Sampai</th>
@@ -43,6 +44,7 @@
                 ?>
                 <tr>
 			<td width="80px"><?php echo ++$start ?></td>
+            <td><?php echo $jadwal->dokter ?></td>
 			<td><?php echo $jadwal->hari ?></td>
 			<td><?php echo $jadwal->dari ?></td>
 			<td><?php echo $jadwal->sampai ?></td>

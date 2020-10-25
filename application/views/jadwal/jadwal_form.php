@@ -1,8 +1,22 @@
 
         <form action="<?php echo $action; ?>" method="post">
+        <div class="form-group">
+            <label>Nama Dokter</label>
+            <input type="text" name="dokter" class="form-control" required="">
+        </div>
 	    <div class="form-group">
             <label for="varchar">Hari <?php echo form_error('hari') ?></label>
-            <input type="text" class="form-control" name="hari" id="hari" placeholder="Hari" value="<?php echo $hari; ?>" />
+            <!-- <input type="text" class="form-control" name="hari" id="hari" placeholder="Hari" value="<?php echo $hari; ?>" /> -->
+            <select name="hari" class="form-control">
+                <option value="<?php echo $hari ?>"><?php echo $hari ?></option>
+                <option value="Senin">Senin</option>
+                <option value="Selasa">Selasa</option>
+                <option value="Rabu">Rabu</option>
+                <option value="Kamis">Kamis</option>
+                <option value="Jumat">Jumat</option>
+                <option value="Sabtu">Sabtu</option>
+                <option value="Minggu">Minggu</option>
+            </select>
         </div>
 	    <div class="form-group">
             <label for="time">Jam Mulai <?php echo form_error('dari') ?></label>
