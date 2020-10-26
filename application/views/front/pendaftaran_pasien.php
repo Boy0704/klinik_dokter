@@ -1,5 +1,15 @@
 <div class="row">
 	<div class="col-md-12">
+		<?php 
+		$this->db->where('aktif', '1');
+		foreach ($this->db->get('pemberitahuan')->result() as $ntf): ?>
+			<div class="alert alert-danger alert-dismissible">
+			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			    <strong>Info !</strong> <?php echo $ntf->pemberitahuan; ?>
+			</div>
+		<?php endforeach ?>
+	</div>
+	<div class="col-md-12">
 		<ul class="nav nav-tabs">
 		    <li class="active"><a data-toggle="tab" href="#home">Peserta</a></li>
 		    <li><a data-toggle="tab" href="#menu1">No Antrian</a></li>

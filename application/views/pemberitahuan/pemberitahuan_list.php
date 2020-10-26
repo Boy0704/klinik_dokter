@@ -43,7 +43,7 @@
                 <tr>
 			<td width="80px"><?php echo ++$start ?></td>
 			<td><?php echo $pemberitahuan->pemberitahuan ?></td>
-			<td><?php echo $pemberitahuan->aktif ?></td>
+			<td><?php echo $retVal = ($pemberitahuan->aktif =='1') ? '<i class="fa fa-check"></i>' : '' ; ?></td>
 			<td style="text-align:center" width="200px">
 				<?php 
 				echo anchor(site_url('pemberitahuan/update/'.$pemberitahuan->id_pemberitahuan),'<span class="label label-info">Ubah</span>'); 

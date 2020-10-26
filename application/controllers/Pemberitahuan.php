@@ -149,7 +149,6 @@ class Pemberitahuan extends CI_Controller
     public function _rules() 
     {
 	$this->form_validation->set_rules('pemberitahuan', 'pemberitahuan', 'trim|required');
-	$this->form_validation->set_rules('aktif', 'aktif', 'trim|required');
 
 	$this->form_validation->set_rules('id_pemberitahuan', 'id_pemberitahuan', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
