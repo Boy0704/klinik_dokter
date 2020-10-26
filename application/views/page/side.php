@@ -30,7 +30,7 @@
         <li><a href="app"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         
         <li><a href="antrian"><i class="fa fa-list"></i> <span>Data Antrian </span></a></li>
-        <li><a href="pasien"><i class="fa fa-address-book"></i> <span>Data Pasien </span></a></li>
+        <li><a href="pemberitahuan"><i class="fa fa-bell"></i> <span>Set Pemberitahuan </span></a></li>
         
         <li><a href="member"><i class="fa fa-address-card"></i> <span>Data Member  </span></a></li>
         <li><a href="jadwal"><i class="fa fa-calendar-check-o"></i> <span>Data Jadwal  </span></a></li>
