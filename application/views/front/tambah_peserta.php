@@ -34,26 +34,26 @@
 				<input type="text" name="umur" class="form-control" id="umur">
 			</div>
 			<div id="detail">
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label>Nama Ayah </label>
 					<input type="text" name="nama_ayah" class="form-control" id="nama_ayah">
 				</div>
 				<div class="form-group">
 					<label>Nama Ibu </label>
 					<input type="text" name="nama_ibu" class="form-control" id="nama_ibu">
-				</div>
+				</div> -->
 				<div class="form-group">
 					<label>Alamat </label>
-					<input type="text" name="alamat" class="form-control" value="<?php echo $data->alamat; ?>" id="alamat">
+					<input type="text" name="alamat" class="form-control" value="<?php echo $data->alamat; ?>" id="alamat" readonly>
 				</div>
 				
 				<div class="form-group">
 					<label>No Handphone / WA </label>
-					<input type="text" name="no_hp" class="form-control" value="<?php echo $data->no_telp; ?>" id="no_hp">
+					<input type="text" name="no_hp" class="form-control" value="<?php echo $data->no_telp; ?>" id="no_hp" readonly>
 				</div>
 				<div class="form-group">
 					<label>No Telp Alternatif </label>
-					<input type="text" name="no_telp" value="<?php echo $data->no_alternatif; ?>" class="form-control" id="no_telp">
+					<input type="text" name="no_telp" value="<?php echo $data->no_alternatif; ?>" class="form-control" id="no_telp" readonly>
 				</div>
 			</div>
 			<div class="form-group">
@@ -93,8 +93,16 @@
 		});
 
 		$("#penanggung_jawab").click(function(event) {
-			$("#pasien").val("<?php echo $this->session->userdata('nama'); ?>");
-			$("#detail").hide();
+			if ($(this).prop('checked') == true) {
+				$("#pasien").val("<?php echo $this->session->userdata('nama'); ?>");
+				$("#pasien").prop('readonly', true);
+				$("#detail").hide();
+			} else {
+				$("#pasien").val("");
+				$("#pasien").prop('readonly', false);
+				$("#detail").show();
+			}
+			
 		});
 	});
 </script>

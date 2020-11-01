@@ -8,7 +8,7 @@ class Antrian_model extends CI_Model
 
     public $table = 'antrian';
     public $id = 'id_antrian';
-    public $order = 'DESC';
+    public $order = 'ASC';
 
     function __construct()
     {

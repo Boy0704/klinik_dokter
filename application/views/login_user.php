@@ -147,20 +147,19 @@
             
             <form action="app/daftar_user" method="POST" class="form-signup">
                 <div class="social-login">
-                    <a href="Login_user/login_fb" class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign up with Facebook</span> </a>
+                    <a href="Login_user/login_fb" class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Daftar dengan Facebook</span> </a>
                 </div>
                 <div class="social-login">
-                    <a href="Login_user/login_google" class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Sign up with Google+</span> </a>
+                    <a href="Login_user/login_google" class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Daftar dengan Google</span> </a>
                 </div>
                 
                 <p style="text-align:center">OR</p>
 
-                <input type="text" id="user-name" name="nama" class="form-control" placeholder="Full name" required="" autofocus="">
                 <input type="email" id="user-email" name="email" class="form-control" placeholder="Email address" required autofocus="">
                 <input type="password" id="user-pass" name="password" class="form-control" placeholder="Password" required autofocus="">
                 <!-- <input type="password" id="user-repeatpass" name="password_konfirmasi" class="form-control" placeholder="Repeat Password" required autofocus=""> -->
 
-                <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-user-plus"></i> Sign Up</button>
+                <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-user-plus"></i> Daftar</button>
                 <a href="#" id="cancel_signup"><i class="fas fa-angle-left"></i> Back</a>
             </form>
             <br>

@@ -52,7 +52,7 @@
 
 								
 
-								<a href="" data-toggle="modal" data-target="#<?php echo $rw->id_pasien ?>mDetail" class="label label-success">Detail</a>
+								<!-- <a href="" data-toggle="modal" data-target="#<?php echo $rw->id_pasien ?>mDetail" class="label label-success">Detail</a> -->
 
 								<!-- Modal -->
 								<div class="modal fade" id="<?php echo $rw->id_pasien ?>mDetail" role="dialog">
@@ -136,6 +136,7 @@
 						$this->db->select('b.nama,a.*,b.tanggal_lahir');
 						$this->db->join('antrian a', 'a.id_pasien = b.id_pasien', 'inner');
 						$this->db->where('tgl_kunjungan!=', '');
+						$this->db->where('b.id_member', $this->session->userdata('id_user'));
 						$this->db->order_by('id_antrian', 'desc');
 						$pasien = $this->db->get('pasien b');
 						foreach ($pasien->result() as $rw) {

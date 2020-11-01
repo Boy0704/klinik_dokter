@@ -36,8 +36,13 @@ class App extends CI_Controller {
 
     public function daftar_user()
     {
+        $cek_email = $this->db->get_where('member', array('email'=>$this->input->post('email')));
+        if ($cek_email->num_rows() > 0) {
+            $this->session->set_flashdata('message', alert_biasa('Email sudah terdaftar, silahkan daftar dengan email lain','warning'));
+            redirect('login_user','refresh');
+            exit();
+        }
         $simpan = $this->db->insert('member', array(
-            'nama' => $this->input->post('nama'),
             'email' => $this->input->post('email'),
             'password' => $this->input->post('password')
         ));
