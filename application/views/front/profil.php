@@ -17,15 +17,15 @@
 			</div>
 			<div class="form-group">
 				<label>Alamat</label>
-				<input type="text" name="alamat" class="form-control" required="">
+				<input type="text" name="alamat" class="form-control" value="<?php echo $rw->alamat ?>" required="">
 			</div>
 			<div class="form-group">
 				<label>No Hp / WA</label>
-				<input type="text" name="no_telp" class="form-control" required="">
+				<input type="text" name="no_telp" class="form-control" value="<?php echo $rw->no_telp ?>" required="">
 			</div>
 			<div class="form-group">
 				<label>No Telp</label>
-				<input type="text" name="no_alternatif" class="form-control" required="">
+				<input type="text" name="no_alternatif" class="form-control" value="<?php echo $rw->no_alternatif ?>" required="">
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary">Update Profil</button>
