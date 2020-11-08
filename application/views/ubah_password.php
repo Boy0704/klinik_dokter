@@ -122,46 +122,15 @@
 </head>
 <body>
     <div id="logreg-forms">
-        <form class="form-signin" action="Login_user/auth" method="POST">
-            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Klinik Dokter</h1>
-            <div class="social-login">
-                <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Login dengan Facebook</span> </button>
-                <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Login dengan Google</span> </button>
-            </div>
-            <p style="text-align:center"> OR  </p>
-            <input type="email" id="inputEmail" class="form-control" name="username" placeholder="Alamat Email" required="" autofocus="">
-            <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required="">
+        <form class="form-signin" action="" method="POST">
+            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Ubah Password</h1>
+            <input type="password"  name="password" class="form-control" placeholder="Masukkan password baru" required="">
             
-            <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
-            <a href="#" id="forgot_pswd">Lupa password?</a>
+            <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Simpan</button>
             <hr>
             <!-- <p>Don't have an account!</p>  -->
-            <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Daftar Akun Baru</button>
-            </form>
-
-            <form action="app/lupa_password" method="POST" class="form-reset">
-                <input type="email" name="email" id="resetEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-                <button class="btn btn-primary btn-block" type="submit">Reset Password</button>
-                <a href="#" id="cancel_reset"><i class="fas fa-angle-left"></i> Back</a>
-            </form>
             
-            <form action="app/daftar_user" method="POST" class="form-signup">
-                <div class="social-login">
-                    <a href="Login_user/login_fb" class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Daftar dengan Facebook</span> </a>
-                </div>
-                <div class="social-login">
-                    <a href="Login_user/login_google" class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Daftar dengan Google</span> </a>
-                </div>
-                
-                <p style="text-align:center">OR</p>
-
-                <input type="email" id="user-email" name="email" class="form-control" placeholder="Email address" required autofocus="">
-                <input type="password" id="user-pass" name="password" class="form-control" placeholder="Password" required autofocus="">
-                <!-- <input type="password" id="user-repeatpass" name="password_konfirmasi" class="form-control" placeholder="Repeat Password" required autofocus=""> -->
-
-                <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-user-plus"></i> Daftar</button>
-                <a href="#" id="cancel_signup"><i class="fas fa-angle-left"></i> Back</a>
-            </form>
+        </form>
             <br>
             
     </div>

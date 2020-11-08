@@ -12,7 +12,7 @@
 	<div class="col-md-12">
 		<ul class="nav nav-tabs">
 		    <li class="active"><a data-toggle="tab" href="#home">Peserta</a></li>
-		    <li><a data-toggle="tab" href="#menu1">No Antrian</a></li>
+		    <!-- <li><a data-toggle="tab" href="#menu1">No Antrian</a></li> -->
 		  </ul>
 
 		  <div class="tab-content">

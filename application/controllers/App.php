@@ -226,11 +226,73 @@ class App extends CI_Controller {
         if ($simpan) {
             $this->session->set_flashdata('message', alert_biasa('Terima kasih sudah melakukan konfirmasi !','success'));
             if ($this->session->userdata('level') == 'user') {
-                redirect('app/daftar_pasien','refresh');
+                redirect('app','refresh');
             } else {
                 redirect('antrian','refresh');
             }
             
+        }
+    }
+
+    public function lupa_password()
+    {
+        if ($_POST) {
+            $email = $this->input->post('email');
+
+            $cek = $this->db->get_where('member', array('email'=>$email));
+            if ($cek->num_rows() > 0) {
+
+                $this->load->library('encrypt');
+
+                $id_member = $cek->row()->id_member;
+                $id_member = $this->encrypt->encode($id_member);
+                $url = base_url().'app/ubah_password?member='.$id_member;
+
+                $subject = "Ubah Password";
+                $pesan = "Silahkan klik link berikut untuk merubah password kamu. <br>
+                    <a href='$url' target='_blank'>KLIK DI SINI UNTUK UBAH PASSWORD</a>
+                ";
+                echo kirim_email($subject,$pesan,$email);
+                $this->session->set_flashdata('message', alert_biasa('Kami telah mengirimkan link ubah password di email kamu!','success'));
+                redirect('login_user','refresh');
+            } else {
+                $this->session->set_flashdata('message', alert_biasa('Email tidak ditemukan, silahkan pakai email lain!','error'));
+                redirect('login_user','refresh');
+            }
+        }
+    }
+
+    public function ubah_password()
+    {
+        $this->load->library('encrypt');
+
+        $id_member = $this->encrypt->decode($this->input->get('member'));
+        if ($_POST) {
+            $password = $this->input->post('password');
+
+            $this->db->where('id_member', $id_member);
+            $this->db->update('member', array('password'=>$password));
+
+            $this->session->set_flashdata('message', alert_biasa('password berhasil di ubah!','success'));
+            redirect('login_user','refresh');
+
+        } else {
+            $this->load->view('ubah_password');
+        }
+    }
+
+    public function hapus_kunjungan($id_antrian)
+    {
+
+        try {
+            
+            $this->db->where('id_antrian', $id_antrian);
+            $delete = $this->db->delete('antrian');
+            $this->session->set_flashdata('message', alert_biasa('Data berhasil dihapus !','success'));
+            redirect('app','refresh');
+        } catch (Exception $e) {
+            $this->session->set_flashdata('message', alert_biasa('ada kesalahan server !','error'));
+            redirect('app','refresh');
         }
     }
 
