@@ -123,6 +123,7 @@ foreach ($pasien->result() as $rw) {
 		              	<?php 
 		              	$this->db->where('id_jadwal', $rw->id_jadwal);
 		              	$this->db->where('tgl_kunjungan', $rw->tgl_kunjungan);
+		              	$this->db->where('date_konfirmasi!=', '');
 		              	$total = $this->db->get('antrian')->num_rows();
 		              	echo $total;
 		              	 ?>

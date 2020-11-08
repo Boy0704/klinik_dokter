@@ -215,7 +215,12 @@ class App extends CI_Controller {
     public function update_konfirmasi($id_antrian,$val)
     {
         $this->db->where('id_antrian', $id_antrian);
-        $simpan = $this->db->update('antrian', array('konfirmasi'=>$val,'date_konfirmasi'=>get_waktu()));
+        if ($val == 'y') {
+            $simpan = $this->db->update('antrian', array('konfirmasi'=>$val,'date_konfirmasi'=>get_waktu()));
+        } elseif ($val == 't') {
+            $simpan = $this->db->update('antrian', array('konfirmasi'=>$val,'date_konfirmasi'=>''));
+        }
+        
         if ($val == 'y') {
             $data_pasien = $this->db->get_where('antrian', array('id_antrian'=>$id_antrian))->row();
             $nama_pasien = get_data('pasien','id_pasien',$data_pasien->id_pasien,'nama');
