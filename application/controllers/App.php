@@ -117,7 +117,7 @@ class App extends CI_Controller {
         $cek_antrian = $this->db->get_where('antrian',array('id_pasien'=>$id_pasien,'tgl_kunjungan'=>$tgl));
         if ($cek_antrian->num_rows() > 0) {
             $this->session->set_flashdata('message', alert_biasa('Kamu sudah memilih jadwal kunjungan di tanggal ini '.$tgl,'error'));
-            redirect('app/daftar_pasien','refresh');
+            redirect('app','refresh');
         }
 
         $simpan = $this->db->insert('antrian', array(
@@ -129,7 +129,7 @@ class App extends CI_Controller {
         ));
         if ($simpan) {
             $this->session->set_flashdata('message', alert_biasa('Antrian Berhasil disimpan','success'));
-            redirect('app/daftar_pasien','refresh');
+            redirect('app','refresh');
         }
     }
 

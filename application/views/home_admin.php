@@ -88,7 +88,25 @@ foreach ($pasien->result() as $rw) {
 
 		            <div class="info-box-content">
 		              <span class="info-box-text">Urutan KE</span>
-		              <span class="info-box-number">10</span>
+		              <span class="info-box-number">
+		              	<?php 
+		              	$urut = 0;
+		              	$no = 0;
+		              	$this->db->select('id_pasien');
+		              	$this->db->where('id_jadwal', $rw->id_jadwal);
+		              	$this->db->where('tgl_kunjungan', $rw->tgl_kunjungan);
+		              	$this->db->order_by('date_konfirmasi', 'asc');
+		              	$urutan = $this->db->get('antrian')->result();
+		              	foreach ($urutan as $br) {
+		              		$no++;
+		              		if ($br->id_pasien == $rw->id_pasien) {
+		              			$urut = $no;
+		              		}
+		              	
+		              	}
+		              	echo $urut;
+		              	 ?>
+		              </span>
 		            </div>
 		            <!-- /.info-box-content -->
 		          </div>
@@ -101,7 +119,14 @@ foreach ($pasien->result() as $rw) {
 
 		            <div class="info-box-content">
 		              <span class="info-box-text">Total </span>
-		              <span class="info-box-number">90</span>
+		              <span class="info-box-number">
+		              	<?php 
+		              	$this->db->where('id_jadwal', $rw->id_jadwal);
+		              	$this->db->where('tgl_kunjungan', $rw->tgl_kunjungan);
+		              	$total = $this->db->get('antrian')->num_rows();
+		              	echo $total;
+		              	 ?>
+		              </span>
 		            </div>
 		            <!-- /.info-box-content -->
 		          </div>
