@@ -95,6 +95,7 @@ foreach ($pasien->result() as $rw) {
 		              	$this->db->select('id_pasien');
 		              	$this->db->where('id_jadwal', $rw->id_jadwal);
 		              	$this->db->where('tgl_kunjungan', $rw->tgl_kunjungan);
+		              	$this->db->where('konfirmasi', 'y');
 		              	$this->db->order_by('date_konfirmasi', 'asc');
 		              	$urutan = $this->db->get('antrian')->result();
 		              	foreach ($urutan as $br) {
