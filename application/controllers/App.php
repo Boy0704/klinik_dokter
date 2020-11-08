@@ -229,7 +229,11 @@ class App extends CI_Controller {
             echo kirim_email($subject,$pesan,get_data('setting','nama','email_admin','value'));
         }
         if ($simpan) {
-            $this->session->set_flashdata('message', alert_biasa('Terima kasih sudah melakukan konfirmasi !','success'));
+            if ($val == 'ya') {
+                $this->session->set_flashdata('message', alert_biasa('Terima kasih sudah melakukan konfirmasi !','success'));
+            } else {
+                $this->session->set_flashdata('message', alert_biasa('konfirmasi kedatangan telah di batalkan !','success'));
+            }
             if ($this->session->userdata('level') == 'user') {
                 redirect('app','refresh');
             } else {
