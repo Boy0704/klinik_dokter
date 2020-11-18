@@ -13,7 +13,7 @@ $google_client->setClientId($client_id);
 $google_client->setClientSecret($secret_id);
 //Set the OAuth 2.0 Redirect URI
 $url_re = siteURL();
-if (superman()) { $url_re .= 'work3/ujian_online/'; }
+if (superman()) { $url_re .= 'klinik_dokter/'; }
 $google_client->setRedirectUri($url_re.'auth/login-google');
 
 $google_client->addScope('email');

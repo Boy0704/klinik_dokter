@@ -14,33 +14,47 @@ class Rekam_medis extends CI_Controller
 
     public function index()
     {
-        $q = urldecode($this->input->get('q', TRUE));
-        $start = intval($this->input->get('start'));
+        // $q = urldecode($this->input->get('q', TRUE));
+        // $start = intval($this->input->get('start'));
         
-        if ($q <> '') {
-            $config['base_url'] = base_url() . 'rekam_medis/index.html?q=' . urlencode($q);
-            $config['first_url'] = base_url() . 'rekam_medis/index.html?q=' . urlencode($q);
-        } else {
-            $config['base_url'] = base_url() . 'rekam_medis/index.html';
-            $config['first_url'] = base_url() . 'rekam_medis/index.html';
-        }
+        // if ($q <> '') {
+        //     $config['base_url'] = base_url() . 'rekam_medis/index.html?q=' . urlencode($q);
+        //     $config['first_url'] = base_url() . 'rekam_medis/index.html?q=' . urlencode($q);
+        // } else {
+        //     $config['base_url'] = base_url() . 'rekam_medis/index.html';
+        //     $config['first_url'] = base_url() . 'rekam_medis/index.html';
+        // }
 
-        $config['per_page'] = 10;
-        $config['page_query_string'] = TRUE;
-        $config['total_rows'] = $this->Rekam_medis_model->total_rows($q);
-        $rekam_medis = $this->Rekam_medis_model->get_limit_data($config['per_page'], $start, $q);
+        // $config['per_page'] = 10;
+        // $config['page_query_string'] = TRUE;
+        // $config['total_rows'] = $this->Rekam_medis_model->total_rows($q);
+        // $rekam_medis = $this->Rekam_medis_model->get_limit_data($config['per_page'], $start, $q);
 
-        $this->load->library('pagination');
-        $this->pagination->initialize($config);
+        // $this->load->library('pagination');
+        // $this->pagination->initialize($config);
 
+        // $data = array(
+        //     'rekam_medis_data' => $rekam_medis,
+        //     'q' => $q,
+        //     'pagination' => $this->pagination->create_links(),
+        //     'total_rows' => $config['total_rows'],
+        //     'start' => $start,
+        //     'judul_page' => 'Riwayat Medis Pasien',
+        //     'konten' => 'rekam_medis/rekam_medis_list',
+        // );
         $data = array(
-            'rekam_medis_data' => $rekam_medis,
-            'q' => $q,
-            'pagination' => $this->pagination->create_links(),
-            'total_rows' => $config['total_rows'],
-            'start' => $start,
-            'judul_page' => 'Riwayat Medis Pasien',
-            'konten' => 'rekam_medis/rekam_medis_list',
+            'konten' => 'rekam_medis/view',
+            'judul_page' => "Rekam Medis Pasien"
+        );
+        $this->load->view('v_index', $data);
+    }
+
+    public function lihat($id_pasien)
+    {
+        $nama = strtoupper(get_data('pasien','id_pasien',$id_pasien,'nama'));
+        $data = array(
+            'konten' => 'rekam_medis/lihat',
+            'judul_page' => "Rekam Medis Pasien [ <b>$nama</b> ]"
         );
         $this->load->view('v_index', $data);
     }

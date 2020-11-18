@@ -67,11 +67,16 @@ foreach ($pasien->result() as $rw) {
 				</div>
 
 				<div class="col-md-4">
+				<?php if (get_data('setting','nama','akses_konfirmasi','value') == '1'): ?>
+					
 					<?php if ($rw->konfirmasi == 't'): ?>
-						<a onclick="javasciprt: return confirm('Yakin akan konfimasi kedatangan sekarang juga ?')" href="app/update_konfirmasi/<?php echo $rw->id_antrian ?>/y" class="btn btn-primary btn-block">Konfirmasi Kehadiran</a>
+						<a onclick="javasciprt: return confirm('Pastikan nomor HP/Whatsapp anda sudah benar dan sudah berada di klinik. Anda akan dimasukkan ke dalam daftar antrian ?')" href="app/update_konfirmasi/<?php echo $rw->id_antrian ?>/y" class="btn btn-primary btn-block">Konfirmasi Kehadiran</a>
 					<?php else: ?>
 						<a onclick="javasciprt: return confirm('Apakah kamu yakin akan membatalkan konfirmasi kedatangan ?')" href="app/update_konfirmasi/<?php echo $rw->id_antrian ?>/t" class="btn btn-warning btn-block">Batal Konfirmasi</a>
 					<?php endif ?>
+
+				<?php endif ?>
+					
 
 					<a onclick="javasciprt: return confirm('Yakin akan hapus jadwal kunjungan ini ?')" href="app/hapus_kunjungan/<?php echo $rw->id_antrian ?>/y" class="btn btn-danger btn-block">Hapus</a>
 

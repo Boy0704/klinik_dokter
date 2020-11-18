@@ -213,5 +213,21 @@
 </script>
 
 <script type="text/javascript"><?php echo $this->session->userdata('message') ?></script>
+<script src="https://cdn.tiny.cloud/1/4mo39ri6dgnfnyfqwhr6nhicdjgg3nckwd3ruoyr8sa3d5z7/tinymce/5/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: ".editor",
+        plugins: [
+             "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+             "searchreplace wordcount visualblocks visualchars code fullscreen",
+             "insertdatetime nonbreaking save table contextmenu directionality",
+             "emoticons template paste textcolor colorpicker textpattern"
+        ],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image responsivefilemanager",
+        images_upload_url: 'https://demo.suryasentosa.com/app/tinymce_upload',
+        images_upload_base_path: 'https://demo.suryasentosa.com/',
+        images_upload_credentials: true
+   });
+</script>
 </body>
 </html>

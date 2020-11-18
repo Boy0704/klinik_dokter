@@ -104,11 +104,11 @@ function cek_hari($date)
 	return $daftar_hari[$namahari];
 }
 
-function kode_urut()
+function kode_urut($tgl_kunjungan)
 {
 	error_reporting(0);
 	$CI =& get_instance();
-	$CI->db->like('create_at', date('Y-m-d'), 'AFTER');
+	$CI->db->where('tgl_kunjungan', $tgl_kunjungan);
 	$CI->db->order_by('no_antrian', 'desc');
 	$no_antrian = $CI->db->get('antrian')->row()->no_antrian;
 	$urutan = (int) substr($no_antrian, 3,3);

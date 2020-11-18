@@ -97,7 +97,7 @@ class App extends CI_Controller {
                     <td><?php echo $jd->format("Y-m-d"); ?></td>
                     <td><?php echo $data_jadwal->row()->dari.' - '.$data_jadwal->row()->sampai ?></td>
                     <td>
-                        <a onclick="javasciprt: return confirm('Pastikan nomor whatsapp/HP utama benar dan sudah update agar dapat dihubungi beserta kolom notes input untuk admin ?')" href="app/pilih_jadwal?tgl=<?php echo $jd->format("Y-m-d"); ?>&id_jadwal=<?php echo $data_jadwal->row()->id_jadwal ?>&id_pasien=<?php echo $id_pasien ?>" class="label label-success">Pilih</a>
+                        <a onclick="javasciprt: return confirm('Anda akan membuat perjanjian. Pastikan nomor HP/Whatsapp yang dipakai saat mendaftar sudah benar ?')" href="app/pilih_jadwal?tgl=<?php echo $jd->format("Y-m-d"); ?>&id_jadwal=<?php echo $data_jadwal->row()->id_jadwal ?>&id_pasien=<?php echo $id_pasien ?>" class="label label-success">Pilih</a>
                     </td>
                 </tr>
                 <?php
@@ -122,7 +122,7 @@ class App extends CI_Controller {
 
         $simpan = $this->db->insert('antrian', array(
             'id_pasien' => $id_pasien,
-            'no_antrian' => kode_urut(),
+            // 'no_antrian' => kode_urut(),
             'create_at' => get_waktu(),
             'id_jadwal' => $id_jadwal,
             'tgl_kunjungan' => $tgl
@@ -212,13 +212,13 @@ class App extends CI_Controller {
         echo hitung_umur($tgl_lahir);
     }
 
-    public function update_konfirmasi($id_antrian,$val)
+    public function update_konfirmasi($id_antrian,$val,$tgl='')
     {
         $this->db->where('id_antrian', $id_antrian);
         if ($val == 'y') {
-            $simpan = $this->db->update('antrian', array('konfirmasi'=>$val,'date_konfirmasi'=>get_waktu()));
+            $simpan = $this->db->update('antrian', array('konfirmasi'=>$val,'date_konfirmasi'=>get_waktu(),'no_antrian'=>kode_urut(get_data('antrian','id_antrian',$id_antrian,'tgl_kunjungan'))));
         } elseif ($val == 't') {
-            $simpan = $this->db->update('antrian', array('konfirmasi'=>$val,'date_konfirmasi'=>''));
+            $simpan = $this->db->update('antrian', array('konfirmasi'=>$val,'date_konfirmasi'=>'','no_antrian'=>''));
         }
         
         if ($val == 'y') {
@@ -237,7 +237,7 @@ class App extends CI_Controller {
             if ($this->session->userdata('level') == 'user') {
                 redirect('app','refresh');
             } else {
-                redirect('antrian','refresh');
+                redirect('antrian?tanggal='.$tgl,'refresh');
             }
             
         }
@@ -288,6 +288,21 @@ class App extends CI_Controller {
         } else {
             $this->load->view('ubah_password');
         }
+    }
+
+    public function set_konfirmasi($value)
+    {
+        if ($value == 'buka') {
+            $this->db->where('nama', 'akses_konfirmasi');
+            $this->db->update('setting', array('value' => '1'));
+        } else {
+            $this->db->where('nama', 'akses_konfirmasi');
+            $this->db->update('setting', array('value' => '0'));
+        }
+
+        $this->session->set_flashdata('message', alert_biasa('Setting Konfirmasi berhasil disimpan','success'));
+        redirect('antrian','refresh');
+
     }
 
     public function hapus_kunjungan($id_antrian)
