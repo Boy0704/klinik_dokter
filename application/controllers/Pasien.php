@@ -181,6 +181,18 @@ class Pasien extends CI_Controller
         }
     }
 
+    public function kaitkan_akun($id_pasien)
+    {
+        $id_member = $this->input->post('id_member');
+
+        $email = get_data('member','id_member',$id_member,'email');
+
+        $this->db->where('id_pasien', $id_pasien);
+        $this->db->update('pasien', array('id_member'=>$id_member));
+        $this->session->set_flashdata('message', alert_notif('email berhasil di kaitkan dengan akun '.$email.' !','success'));
+        redirect('rekam_medis','refresh');
+    }
+
     public function _rules() 
     {
 	$this->form_validation->set_rules('nama', 'nama', 'trim|required');
