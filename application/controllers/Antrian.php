@@ -161,6 +161,61 @@ class Antrian extends CI_Controller
         }
     }
 
+
+    public function cek_email($value='')
+    {
+        if ($value != '' and strpos($value, '@')) {
+            $this->db->where('email', $value);
+            $cek = $this->db->get('member');
+            if ($cek->num_rows() > 0) {
+                $id_member = $cek->row()->id_member;
+                ?>
+                <span class="label label-success">Email ditemukan.</span>
+                <input type="hidden" name="status_email" value="1">
+                <input type="hidden" name="id_member" value="<?php echo $id_member ?>">
+                <?php
+            } else {
+                ?>
+                <span class="label label-info">Email tidak ditemukan.</span>
+                <input type="hidden" name="status_email" value="0">
+                <input type="hidden" name="id_member" value="">
+                <?php
+            }
+        }
+    }
+
+    public function simpan_antrian_manual()
+    {
+        $nama = $this->input->post('nama');
+        $tgl_lahir = $this->input->post('tgl_lahir');
+        $no_hp = $this->input->post('no_hp');
+        $email = $this->input->post('email');
+        $status_email = $this->input->post('status_email');
+        $id_member = $this->input->post('id_member');
+        $id_jadwal = $this->input->post('id_jadwal');
+
+        $data_p = array(
+            'nama' => $nama,
+            'tanggal_lahir' => $tgl_lahir,
+            'no_hp' => $no_hp,
+            'id_member' => $id_member,
+        );
+        $this->db->insert('pasien', $data_p);
+        $id_pasien = $this->db->insert_id();
+        $data_ant = array(
+            'id_pasien' => $id_pasien,
+            'konfirmasi' => 'y',
+            'id_jadwal' => $id_jadwal,
+            'create_at' =>get_waktu(),
+            'date_konfirmasi' =>get_waktu(),
+            'tgl_kunjungan' =>date('Y-m-d'),
+        );
+        $this->db->insert('antrian', $data_ant);
+        $this->session->set_flashdata('message', alert_notif('Pendaftaran berhasil di simpan !','success'));
+        redirect('antrian','refresh');
+    }
+
+
     public function _rules() 
     {
 	$this->form_validation->set_rules('no_antrian', 'no antrian', 'trim|required');

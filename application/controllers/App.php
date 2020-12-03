@@ -80,7 +80,7 @@ class App extends CI_Controller {
 
     public function get_data_jadwal()
     {
-        $no = 0;
+        $no = 1;
         $nama_dokter = $this->input->post('dokter');
         $id_pasien = $this->input->post('id_pasien');
         foreach (list_date() as $jd): 

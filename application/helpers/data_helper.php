@@ -1,5 +1,17 @@
 <?php 
 
+function alert_notif($pesan,$type)
+{
+	return "<div class=\"alert alert-$type fade in alert-radius-bordered alert-shadowed\">
+                                        <button class=\"close\" data-dismiss=\"alert\">
+                                            ×
+                                        </button>
+                                        <i class=\"fa-fw fa fa-info\"></i>
+
+                                        <strong>Info:</strong> $pesan
+                                    </div>";
+}
+
 function superman()
 {
   if (strpos(siteURL(),'://localhost')){
@@ -18,9 +30,9 @@ function siteURL() {
 function api($value)
 {
 	if ($value == 'login_fb') {
-		return '255436962206721, 07348b9734248bb5d93b4a4a40c012d8';
+		return '701355177153874, 10c9e248729110d46d06f40f5acb56b8';
 	} elseif ($value == 'login_google') {
-		return '514260896239-7gsm0vuljlcpf2m1qs1qr308isotqe64.apps.googleusercontent.com, H_JIU-RVp23IyVJ32lUNuqK9';
+		return '636707262351-sl58b3he6rkitp08722t1oj6vkhd5von.apps.googleusercontent.com, dYeGNNwrm_TzzJY__1pvGhQv';
 	}
 }
 

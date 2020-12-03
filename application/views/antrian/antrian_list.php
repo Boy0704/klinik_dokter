@@ -27,6 +27,11 @@
             </div>
         </div>
         <hr>
+        <div style="margin-bottom: 10px;">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlTambah">
+                <i class="fa fa-plus"></i> Tambah Antrian
+              </button>
+        </div>
         <div class="table-responsive">
         <table class="table table-bordered" style="margin-bottom: 10px">
             <thead>
@@ -78,4 +83,121 @@
         </table>
         </div>
         
+
+<div class="modal fade" id="mdlTambah" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">Tambah Antrian</h4>
+      </div>
+      <div class="modal-body">
+        <form action="antrian/simpan_antrian_manual" method="POST" class="form-horizontal">
+          <div class="box-body">
+            <div class="form-group">
+              <label class="col-sm-2 control-label text-left">Nama Pasien</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Pasien">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label text-left">Tanggal Lahir</label>
+              <div class="col-sm-10">
+                <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" placeholder="Nama Pasien">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label text-left">No Hp</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="no_hp" id="no_hp" placeholder="No HP">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label text-left">Alamat Email</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off">
+                <span id="rsl_email"></span>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <td>No</td>
+                        <td>Dokter</td>
+                        <td>Hari</td>
+                        <td>Tanggal</td>
+                        <td>Jam Praktek</td>
+                        <td>Pilihan</td>
+                    </tr>
+                    </thead>
+                    <tbody id="list_jadwal">
+                        <?php 
+                        $no = 1;
+                        foreach (list_date() as $jd): 
+                            $this->db->where('hari', cek_hari($jd->format("Y-m-d")));
+                            $data_jadwal = $this->db->get('jadwal');
+                            if ($data_jadwal->num_rows() > 0) {
+                                ?>
+                                <tr>
+                                    <td><?php echo $no ?></td>
+                                    <td><?php echo $data_jadwal->row()->dokter ?></td>
+                                    
+                                    <td><?php echo $data_jadwal->row()->hari ?></td>
+                                    <td><?php echo $jd->format("Y-m-d"); ?></td>
+                                    <td><?php echo $data_jadwal->row()->dari.' - '.$data_jadwal->row()->sampai ?></td>
+                                    <td>
+                                        <input type="radio" name="id_jadwal" value="<?php echo $data_jadwal->row()->id_jadwal ?>"> 
+                                    </td>
+                                </tr>
+                                <?php
+                            } 
+
+                            
+                            
+                        $no++; endforeach;
+                         ?>
+                    </tbody>
+                    
+                </table>
+            </div>
+            
+          </div>
+          <!-- /.box-body -->
+          
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#email").keyup(function() {
+            var email = $(this).val();
+            $.ajax({url: "antrian/cek_email/"+email, 
+                beforeSend: function(){ },
+                success: function(result){
+                    $("#rsl_email").html(result);
+                  console.log("success");
+                },
+                complete:function(data){ }
+            });
+        });
+    });
+</script>
     
