@@ -333,11 +333,36 @@ function get_setting($select)
 	return 'KLINIK DOKTER';
 }
 
+function tanggal_indo($tanggal)
+{
+	$bulan = array (1 =>   'Januari',
+				'Februari',
+				'Maret',
+				'April',
+				'Mei',
+				'Juni',
+				'Juli',
+				'Agustus',
+				'September',
+				'Oktober',
+				'November',
+				'Desember'
+			);
+	$split = explode('-', $tanggal);
+	return $split[2] . ' ' . $bulan[ (int)$split[1] ] . ' ' . $split[0];
+}
+
 function get_data($tabel,$primary_key,$id,$select)
 {
 	$CI =& get_instance();
-	$data = $CI->db->query("SELECT $select FROM $tabel where $primary_key='$id' ")->row_array();
-	return $data[$select];
+	$data = $CI->db->query("SELECT $select FROM $tabel where $primary_key='$id' ");
+	if ($data->num_rows() > 0) {
+		$data = $data->row_array();
+		return $data[$select];
+	} else {
+		return '';
+	}
+	
 }
 
 function get_produk($barcode,$select)

@@ -59,6 +59,46 @@ class Rekam_medis extends CI_Controller
         $this->load->view('v_index', $data);
     }
 
+    public function aksi_simpan($aksi,$id)
+    {
+        if ($aksi == '1') {
+            $riwayat_penyakit = $this->input->post('riwayat_penyakit');
+            $alergi = $this->input->post('alergi');
+            $data = array(
+                'riwayat_penyakit' =>$riwayat_penyakit,
+                'alergi'=>$alergi
+            );
+            $cek = $this->db->get_where('rekam_medis', array('id_pasien'=>$id));
+            if ($cek->num_rows()>0) {
+                $this->db->where('id_pasien', $id);
+                $this->db->update('rekam_medis', $data);
+            } else {
+                $this->db->insert('rekam_medis', array('id_pasien'=>$id,'riwayat_penyakit'=>$riwayat_penyakit,'alergi'=>$alergi));
+            }
+            
+        } elseif ($aksi == '2') {
+            $tujuan_kunjungan = $this->input->post('tujuan_kunjungan');
+            $clinical_notes = $this->input->post('clinical_notes');
+            $medications = $this->input->post('medications');
+            $data = array(
+                'tujuan_kunjungan' =>$tujuan_kunjungan,
+                'clinical_notes' =>$clinical_notes,
+                'medications'=>$medications,
+            );
+            $this->db->where('id_pasien', $id);
+            $this->db->where('tgl_kunjungan', $_GET['tgl_kunjungan']);
+            $this->db->update('antrian', $data);
+        } elseif ($aksi == '4') {
+            $imunisasi = $this->input->post('imunisasi');
+            $data = array('imunisasi'=>$imunisasi);
+            $this->db->where('id_pasien', $id);
+            $this->db->update('rekam_medis', $data);
+        }
+        $this->session->set_flashdata('message', alert_biasa('data berhasil di update','success'));
+        redirect('rekam_medis/lihat/'.$id,'refresh');
+
+    }
+
     public function read($id) 
     {
         $row = $this->Rekam_medis_model->get_by_id($id);

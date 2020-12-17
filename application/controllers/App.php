@@ -34,6 +34,64 @@ class App extends CI_Controller {
 		$this->load->view('v_index', $data);
     }
 
+    public function dropzone($id)
+    {
+        if (!empty($_FILES)) {
+             $tempFile = $_FILES['file']['tmp_name'];
+            $fileName = $_FILES['file']['name'];
+            $targetPath = getcwd() . '/image/pasien/';
+            $targetFile = $targetPath . $fileName ;
+            move_uploaded_file($tempFile, $targetFile);
+            $cek_ = $this->db->get_where('img_pasien', array('id_pasien'=>$id,'img'=>$fileName));
+            if ($cek_->num_rows() > 0) {
+                echo "nama file sudah ada!";
+                exit();
+            }
+            $this->db->insert('img_pasien', array('id_pasien'=>$id,'img'=>$fileName));
+        } else {
+            
+        }
+    }
+
+    public function image($id)
+    {
+        
+        ?>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Option</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                foreach ($this->db->get_where('img_pasien',array('id_pasien'=>$id))->result() as $row) {
+                 ?>
+                <tr>
+                    <td><img src="image/pasien/<?php echo $row->img ?>" style="width: 200px; height: 200px;"></td>
+                    <td>
+                        <a href="app/hapus_img/<?php echo $id.'/'.$row->img; ?>" class="btn btn-sm btn-danger">hapus</a>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+
+        <?php
+    }
+
+    public function hapus_img($id,$img)
+    {
+        $this->db->where('id_pasien', $id);
+        $this->db->where('img', $img);
+        $this->db->delete('img_pasien');
+        unlink('./image/pasien/'.$img);
+        $this->session->set_flashdata('message', alert_biasa('Berhasil hapus gambar','success'));
+        redirect('rekam_medis/lihat/'.$id,'refresh');
+    }
+
     public function daftar_user()
     {
         $cek_email = $this->db->get_where('member', array('email'=>$this->input->post('email')));
