@@ -49,6 +49,11 @@ class Rekam_medis extends CI_Controller
         $this->load->view('v_index', $data);
     }
 
+    public function cetak_resep($id_antrian)
+    {
+        $this->load->view('rekam_medis/cetak_resep');
+    }
+
     public function lihat($id_pasien)
     {
         $nama = strtoupper(get_data('pasien','id_pasien',$id_pasien,'nama'));

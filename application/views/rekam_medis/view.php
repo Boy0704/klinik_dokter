@@ -38,6 +38,7 @@
 						<a href="rekam_medis/lihat/<?php echo $rw->id_pasien ?>" class="label label-info">Lihat</a>
 						<a href="#" class="label label-default" data-toggle="modal" data-target="#mdlAkun<?php echo $rw->id_pasien ?>">Kaitkan Akun</a>
 
+
 						<div class="modal fade" id="mdlAkun<?php echo $rw->id_pasien ?>" style="display: none;">
 						  <div class="modal-dialog">
 						    <div class="modal-content">

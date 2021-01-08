@@ -79,6 +79,9 @@ $dt_pasien = $this->db->get('pasien')->row();
 	                    	
 	                    	
 	                    		<div class="row">
+	                    			<div class="col-md-12">
+	                    				<a href="rekam_medis/cetak_resep/<?php echo $rw->id_antrian ?>" target="_blank" class="btn btn-success"><i class="fa fa-print"></i> Cetak Resep</a><br>
+	                    			</div>
 	                    			<div class="col-md-6">
 	                    				<div class="form-group">
 			                    			<label>Clinical Notes</label>

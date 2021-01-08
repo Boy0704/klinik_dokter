@@ -34,6 +34,27 @@ class App extends CI_Controller {
 		$this->load->view('v_index', $data);
     }
 
+    public function setting()
+    {
+        if ($_POST) {
+            $aksi = $this->input->post('aksi');
+            if ($aksi == 'ubah_alamat') {
+                $alamat = $this->input->post('alamat');
+                $this->db->where('nama', 'alamat');
+                $this->db->update('setting', array('value'=>$alamat));
+
+                $this->session->set_flashdata('message', alert_biasa('Alamat berhasil diubah !','success'));
+                redirect('app/setting','refresh');
+            }
+        } else {
+            $data = array(
+                'konten' => 'setting',
+                'judul_page' => 'Setting',
+            );
+            $this->load->view('v_index', $data);
+        }
+    }
+
     public function dropzone($id)
     {
         if (!empty($_FILES)) {
