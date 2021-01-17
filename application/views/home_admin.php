@@ -27,6 +27,7 @@ $this->db->select('b.nama,a.*,b.tanggal_lahir');
 $this->db->join('antrian a', 'a.id_pasien = b.id_pasien', 'inner');
 $this->db->where('tgl_kunjungan!=', '');
 $this->db->where('b.id_member', $this->session->userdata('id_user'));
+$this->db->where('a.status_kunjungan', 'open');
 $this->db->order_by('id_antrian', 'desc');
 $pasien = $this->db->get('pasien b');
 foreach ($pasien->result() as $rw) {
@@ -101,6 +102,7 @@ foreach ($pasien->result() as $rw) {
 		              	$this->db->where('id_jadwal', $rw->id_jadwal);
 		              	$this->db->where('tgl_kunjungan', $rw->tgl_kunjungan);
 		              	$this->db->where('konfirmasi', 'y');
+		              	$this->db->where('status_kunjungan!=', 'close');
 		              	$this->db->order_by('date_konfirmasi', 'asc');
 		              	$urutan = $this->db->get('antrian')->result();
 		              	foreach ($urutan as $br) {

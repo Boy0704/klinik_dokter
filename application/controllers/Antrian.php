@@ -45,6 +45,30 @@ class Antrian extends CI_Controller
         $this->load->view('v_index', $data);
     }
 
+    public function skip_panggilan($id_antrian)
+    {
+        $this->db->where('id_antrian', $id_antrian);
+        $this->db->update('antrian', array('date_konfirmasi'=>get_waktu()));
+
+        if ($_GET) {
+            redirect('antrian?tanggal='.$_GET['tanggal'],'refresh');
+        } else {
+            redirect('antrian','refresh');
+        }
+    }
+
+    public function simpan_panggilan($id_antrian)
+    {
+        $this->db->where('id_antrian', $id_antrian);
+        $this->db->update('antrian', array('status_kunjungan'=>'close'));
+
+        if ($_GET) {
+            redirect('antrian?tanggal='.$_GET['tanggal'],'refresh');
+        } else {
+            redirect('antrian','refresh');
+        }
+    }
+
     public function read($id) 
     {
         $row = $this->Antrian_model->get_by_id($id);

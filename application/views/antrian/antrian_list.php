@@ -37,7 +37,7 @@
             <thead>
             <tr>
                 <th>No</th>
-		<th>No Antrian</th>
+		<!-- <th>No Antrian</th> -->
 		<th>Nama Pasien</th>
 		<th>Konfirmasi</th>
 		<th>Date Konfirmasi</th>
@@ -51,22 +51,62 @@
         } else {
             $this->db->where('tgl_kunjungan', date('Y-m-d'));
         }
+        $this->db->order_by('date_konfirmasi', 'asc');
         $antrian_data = $this->db->get('antrian')->result();
             foreach ($antrian_data as $antrian)
             {
                 ?>
                 <tr>
 			<td width="80px"><?php echo ++$start ?></td>
-			<td><?php echo $antrian->no_antrian ?></td>
+			<!-- <td><?php echo $antrian->no_antrian ?></td> -->
 			<td><?php echo get_data('pasien','id_pasien',$antrian->id_pasien,'nama') ?></td>
 			
 			<td><?php echo $retVal = ($antrian->konfirmasi == 'y') ? '<span class="label label-success">dikonfirmasi</span>' : '<span class="label label-danger">belum konfirmasi</span>' ; ?></td>
 			<td><?php echo $antrian->date_konfirmasi ?></td>
 			<td style="text-align:center" width="200px">
+                <?php if ($antrian->status_kunjungan == 'close'): ?>
+                <label class="label label-success"><i>Kunjungan selesai</i></label>
+
+                <?php else: ?>
+                
                 <a href="https://api.whatsapp.com/send?phone=6285273592655&text=Ini tes wa !" class="label label-default" target="_blank">WA</a>
                 <?php if ($antrian->konfirmasi == 't'): ?>
                     <a onclick="javasciprt: return confirm('Apakah kamu yakin ?')" href="app/update_konfirmasi/<?php echo $antrian->id_antrian ?>/y/<?php echo $this->input->get('tanggal') ?>" class="label label-warning">Konfirmasi</a>
                 <?php else: ?>
+
+                    <a href="#" data-toggle="modal" data-target="#mdlCall_<?php echo $antrian->id_antrian ?>" class="label label-warning">Panggil Pasien</a>
+
+                    <!-- Modal -->
+                    <div id="mdlCall_<?php echo $antrian->id_antrian ?>" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Konfirmasi Panggil</h4>
+                          </div>
+                          <div class="modal-body">
+                            <center>
+                                <?php 
+                                $get = '';
+                                if ($_GET) {
+                                    $get = "?tanggal=".$_GET['tanggal'];
+                                }
+                                 ?>
+                                <a href="antrian/skip_panggilan/<?php echo $antrian->id_antrian.$get ?>" class="btn btn-primary">LEWATI</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="antrian/simpan_panggilan/<?php echo $antrian->id_antrian.$get ?>" class="btn btn-success">TERIMA</a>
+                            </center>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
                     <a onclick="javasciprt: return confirm('Apakah kamu yakin ?')" href="app/update_konfirmasi/<?php echo $antrian->id_antrian ?>/t/<?php echo $this->input->get('tanggal') ?>" class="label label-success">Batal Konfirmasi</a>
                 <?php endif ?>
 				<?php 
@@ -74,6 +114,7 @@
 				echo '  '; 
 				echo anchor(site_url('antrian/delete/'.$antrian->id_antrian),'<span class="label label-danger">Hapus</span>','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
 				?>
+                <?php endif ?>
 			</td>
 		</tr>
                 <?php
