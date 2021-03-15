@@ -34,6 +34,100 @@ class App extends CI_Controller {
 		$this->load->view('v_index', $data);
     }
 
+    public function backup_data()
+    {
+        $data = array(
+                'konten' => 'backup_db',
+                'judul_page' => 'Backup Database',
+            );
+        $this->load->view('v_index', $data);
+    }
+
+    public function restore_data()
+    {
+        $data = array(
+                'konten' => 'restore_db',
+                'judul_page' => 'Restore Database',
+            );
+        $this->load->view('v_index', $data);
+    }
+
+    public function aksi_restore()
+    {
+        ini_set('memory_limit', '-1');
+        if ($_FILES) {
+            // log_r($_FILES['file_db']['type']);
+            $return = array();
+            $this->load->library('upload'); // Load librari upload
+
+            $config['upload_path'] = './backup/database/';
+            $config['allowed_types'] = 'sql';
+            $config['max_size'] = 1024;
+            $config['overwrite'] = true;
+            $config['file_name'] = 'mybackup';
+
+            $this->upload->initialize($config); // Load konfigurasi uploadnya
+            if($this->upload->do_upload('file_db')){ // Lakukan upload dan Cek jika proses upload berhasil
+                // Jika berhasil :
+                $return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
+            }else{
+                // Jika gagal :
+                $return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
+
+                $this->session->set_flashdata('message',alert_biasa($return['error'],'error'));
+                redirect('app/restore_data','refresh');
+            }
+
+            $isi_file = file_get_contents('./backup/database/mybackup.sql');
+            $string_query = rtrim( $isi_file, "\n;" );
+            $array_query = explode(";", $query);
+            foreach($array_query as $query)
+            {
+                $this->db->query($query);
+            }
+
+            $this->session->set_flashdata('message',alert_biasa("Restore database berhasil !",'success'));
+            redirect('app/restore_data','refresh');
+
+            
+        } 
+    }
+
+    public function download_db()
+    {
+        $prefs = array(
+            'tables'     => array('a_user', 'antrian','img_pasien','jadwal','member','pasien','rekam_medis','setting','pemberitahuan'),
+            // Array table yang akan dibackup
+            'ignore'     => array(),
+            // Daftar table yang tidak akan dibackup
+            'format'     => 'txt',
+            // gzip, zip, txt format filenya
+            'filename'   => 'mybackup.sql',
+            // Nama file
+            'add_drop'   => TRUE, 
+            // Untuk menambahkan drop table di backup
+            'add_insert' => TRUE,
+            // Untuk menambahkan data insert di file backup
+            'newline'    => "\n"
+            // Baris baru yang digunakan dalam file backup
+        );
+
+        // Load the DB utility class
+        $this->load->dbutil();
+        // $this->dbutil->backup($prefs);
+
+        // Backup database dan dijadikan variable
+        $backup = $this->dbutil->backup($prefs);
+
+        // Load file helper dan menulis ke server untuk keperluan restore
+        $this->load->helper('file');
+        write_file('/backup/database/mybackup-'.date('d-m-Y').'.sql', $backup);
+
+        // Load the download helper dan melalukan download ke komputer
+        $this->load->helper('download');
+        force_download('mybackup-'.date('d-m-Y').'.sql', $backup);
+    }
+
     public function setting()
     {
         if ($_POST) {
