@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-4">
-		<a href="#sdfd" class="btn btn-primary">Tambah Pasien</a>
+		<!-- <a href="#sdfd" class="btn btn-primary">Tambah Pasien</a> -->
 	</div>
 	<div class="col-md-4">
 		<div style="margin-top: 8px" id="message">
