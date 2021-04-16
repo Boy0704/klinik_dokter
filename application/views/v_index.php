@@ -34,6 +34,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="assets/bower_components/datetimepicker/jquery.datetimepicker.full.min.js"></script>
+<script type="text/javascript" src="assets/is-private-mode.js"></script>
 
 
 

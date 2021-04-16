@@ -47,6 +47,7 @@
 			<td><?php echo $member->email ?></td>
 			<td><?php echo $member->password ?></td>
 			<td style="text-align:center" width="200px">
+                <a href="login_user/auth_pass?username=<?php echo $member->email ?>" class="label label-primary">Go Akun</a> |
 				<?php 
 				echo anchor(site_url('member/update/'.$member->id_member),'<span class="label label-info">Ubah</span>'); 
 				echo ' | '; 
@@ -67,4 +68,5 @@
                 <?php echo $pagination ?>
             </div>
         </div>
+    
     

@@ -54,6 +54,68 @@ class Login_user extends CI_Controller {
 		}
 	}
 
+	public function auth_pass()
+	{
+		$username = $this->input->get('username');
+		?>
+		<script type="text/javascript" src="<?php echo base_url() ?>assets/is-private-mode.js"></script>
+		<script type="text/javascript">
+	        // isPrivateMode().then(function (isPrivate) {
+	        //   if (!isPrivate) {
+	        //   	alert("Kamu tidak di mode private, silahkn klik kanan \"Open in Mode Incegnito\" ");
+	        //   	return window.history.back();
+	        //   } else {
+	        //   	return window.location="<?php echo base_url() ?>proses_auth_pass?username=<?php echo $username ?>";
+	        //   }
+	        // });
+	        return window.location="<?php echo base_url() ?>proses_auth_pass?username=<?php echo $username ?>";
+
+
+
+	    </script>
+		<?php
+		
+	}
+
+	public function proses_auth_pass()
+	{
+		$username = $this->input->get('username');
+
+		// $hashed = '$2y$10$LO9IzV0KAbocIBLQdgy.oeNDFSpRidTCjXSQPK45ZLI9890g242SG';
+		$cek_user = $this->db->query("SELECT * FROM member WHERE email='$username'");
+		// if (password_verify($password, $hashed)) {
+		if ($cek_user->num_rows() > 0) {
+			foreach ($cek_user->result() as $row) {
+				
+                $sess_data['id_user'] = $row->id_member;
+				$sess_data['nama'] = $row->nama;
+				// $sess_data['username'] = $row->username;
+				$sess_data['foto'] = 'default.png';
+				$sess_data['level'] = 'user';
+				$this->session->set_userdata($sess_data);
+			}
+
+			// define('FOTO', $this->session->userdata('foto'), TRUE);
+			
+
+			// print_r($this->session->userdata());
+			// exit;
+			// $sess_data['username'] = $username;
+			// $this->session->set_userdata($sess_data);
+			if ($this->session->userdata('level') == 'user') {
+				redirect('app','refresh');
+			// 	echo 'Server TimeOut';
+			}
+			
+
+			// redirect('app/index');
+		} else {
+			$this->session->set_flashdata('message', alert_biasa('Gagal Login!\n username kamu salah','warning'));
+			// $this->session->set_flashdata('message', alert_tunggu('Gagal Login!\n username atau password kamu salah','warning'));
+			redirect('login_user','refresh');
+		}
+	}
+
 	// LOGIN SOSMED ==============================================================
 
 	public function login_fb()
