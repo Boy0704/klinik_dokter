@@ -60,15 +60,16 @@ class Login_user extends CI_Controller {
 		?>
 		<script type="text/javascript" src="<?php echo base_url() ?>assets/is-private-mode.js"></script>
 		<script type="text/javascript">
-	        // isPrivateMode().then(function (isPrivate) {
-	        //   if (!isPrivate) {
-	        //   	alert("Kamu tidak di mode private, silahkn klik kanan \"Open in Mode Incegnito\" ");
-	        //   	return window.history.back();
-	        //   } else {
-	        //   	return window.location="<?php echo base_url() ?>proses_auth_pass?username=<?php echo $username ?>";
-	        //   }
-	        // });
-	        return window.location="<?php echo base_url() ?>proses_auth_pass?username=<?php echo $username ?>";
+	        isPrivateMode().then(function (isPrivate) {
+	          if (!isPrivate) {
+	          	// alert("Kamu tidak di mode private, silahkn klik kanan \"Open in Mode Incegnito\" ");
+	          	// return window.history.back();
+	          	return window.location="<?php echo base_url() ?>proses_auth_pass?username=<?php echo $username ?>";
+	          } else {
+	          	return window.location="<?php echo base_url() ?>proses_auth_pass?username=<?php echo $username ?>";
+	          }
+	        });
+	        // return window.location="<?php echo base_url() ?>proses_auth_pass?username=<?php echo $username ?>";
 
 
 
