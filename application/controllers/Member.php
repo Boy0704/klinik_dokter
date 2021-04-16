@@ -10,6 +10,9 @@ class Member extends CI_Controller
         parent::__construct();
         $this->load->model('Member_model');
         $this->load->library('form_validation');
+        if ($this->session->userdata('level') != 'admin') {
+            redirect('login','refresh');
+        }
     }
 
     public function index()

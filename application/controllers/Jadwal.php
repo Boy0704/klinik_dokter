@@ -10,6 +10,9 @@ class Jadwal extends CI_Controller
         parent::__construct();
         $this->load->model('Jadwal_model');
         $this->load->library('form_validation');
+        if ($this->session->userdata('level') != 'admin') {
+            redirect('login','refresh');
+        }
     }
 
     public function index()
