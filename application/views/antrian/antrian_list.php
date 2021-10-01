@@ -33,12 +33,14 @@
               </button>
         </div>
         <div class="table-responsive">
-        <table class="table table-bordered" style="margin-bottom: 10px">
+        <table class="table table-bordered" style="margin-bottom: 10px" id="example2">
             <thead>
             <tr>
                 <th>No</th>
 		<!-- <th>No Antrian</th> -->
-		<th>Nama Pasien</th>
+        <th>Nama Pasien</th>
+        <th>Jadwal dipilih</th>
+		<th>Dokter</th>
 		<th>Konfirmasi</th>
 		<th>Date Konfirmasi</th>
 		<th>Action</th>
@@ -60,7 +62,18 @@
 			<td width="80px"><?php echo ++$start ?></td>
 			<!-- <td><?php echo $antrian->no_antrian ?></td> -->
 			<td><?php echo get_data('pasien','id_pasien',$antrian->id_pasien,'nama') ?></td>
-			
+			<td>
+                <?php 
+                $hari = get_data('jadwal','id_jadwal',$antrian->id_jadwal,'hari');
+                $dari = get_data('jadwal','id_jadwal',$antrian->id_jadwal,'dari');
+                $sampai = get_data('jadwal','id_jadwal',$antrian->id_jadwal,'sampai');
+                $dokter = get_data('jadwal','id_jadwal',$antrian->id_jadwal,'dokter');
+                echo  $hari .', '.$dari.' - '.$sampai
+                 ?>         
+            </td>
+            <td>
+                <?php echo $dokter ?>
+            </td>
 			<td><?php echo $retVal = ($antrian->konfirmasi == 'y') ? '<span class="label label-success">dikonfirmasi</span>' : '<span class="label label-danger">belum konfirmasi</span>' ; ?></td>
 			<td><?php echo $antrian->date_konfirmasi ?></td>
 			<td style="text-align:center" width="200px">
