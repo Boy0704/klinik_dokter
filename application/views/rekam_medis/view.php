@@ -9,8 +9,10 @@
 	</div>
 	<div class="col-md-4">
 		<label>Berdasarkan Tgl Kunjungan</label>
-		<input type="date" name="" class="form-control"><br>
-		<button type="submit" class="btn btn-primary"> Cari</button>
+		<form action="" method="GET">
+			<input type="date" name="tgl_kunjungan" class="form-control"><br>
+			<button type="submit" class="btn btn-primary"> Cari</button>
+		</form>
 	</div>
 	<div class="col-md-12">
 		<div class="table-responsive">
@@ -20,6 +22,7 @@
 					<th>No.</th>
 					<th>Nama Pasien</th>
 					<th>Umur</th>
+					<th>Tanggal Kunjungan</th>
 					<th>Akun Terkait</th>
 					<th>Pilihan</th>
 				</tr>
@@ -27,12 +30,20 @@
 			<tbody>
 				<?php 
 				$no= 1;
-				foreach ($this->db->get('pasien')->result() as $rw): ?>
+				$where = '';
+				if (isset($_GET['tgl_kunjungan'])) {
+					$tgl_kunjungan = $this->input->get('tgl_kunjungan');
+					$where = "AND antrian.tgl_kunjungan ='$tgl_kunjungan' ";
+				}
+				$sql = "SELECT pasien.*, antrian.tgl_kunjungan  FROM pasien INNER JOIN antrian ON pasien.id_pasien=antrian.id_pasien where antrian.id_jadwal !='' $where ";
+				foreach ($this->db->query($sql)->result() as $rw):
+				 ?>
 				
 				<tr>
 					<td><?php echo $no; ?></td>
 					<td><?php echo $rw->nama ?></td>
 					<td><?php echo hitung_umur($rw->tanggal_lahir) ?></td>
+					<td><?php echo $rw->tgl_kunjungan ?></td>
 					<td><?php echo get_data('member','id_member',$rw->id_member,'email') ?></td>
 					<td>
 						<a href="rekam_medis/lihat/<?php echo $rw->id_pasien ?>" class="label label-info">Lihat</a>
