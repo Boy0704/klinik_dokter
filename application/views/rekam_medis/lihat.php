@@ -85,13 +85,13 @@ $dt_pasien = $this->db->get('pasien')->row();
 	                    			<div class="col-md-6">
 	                    				<div class="form-group">
 			                    			<label>Clinical Notes</label>
-			                    			<textarea class="form-control editor" name="clinical_notes"><?php echo $rw->clinical_notes ?></textarea>
+			                    			<textarea class="form-control" name="clinical_notes"><?php echo $rw->clinical_notes ?></textarea>
 			                    		</div>
 	                    			</div>
 	                    			<div class="col-md-6">
 	                    				<div class="form-group">
 			                    			<label>Medications</label>
-			                    			<textarea class="form-control editor" name="medications"><?php echo $rw->medications ?></textarea>
+			                    			<textarea class="form-control" name="medications"><?php echo $rw->medications ?></textarea>
 			                    		</div>
 	                    			</div>
 	                    		</div>
