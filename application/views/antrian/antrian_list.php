@@ -67,9 +67,12 @@
                 <?php if ($antrian->status_kunjungan == 'close'): ?>
                 <label class="label label-success"><i>Kunjungan selesai</i></label>
 
-                <?php else: ?>
+                <?php else: 
+                  
+                  $no_wa = get_data('pasien','id_pasien',$antrian->id_pasien,'no_telp');
+                  ?>
                 
-                <a href="https://api.whatsapp.com/send?phone=6285273592655&text=Ini tes wa !" class="label label-default" target="_blank">WA</a>
+                <a href="https://api.whatsapp.com/send?phone=62$no_wa&text=Ini tes wa !" class="label label-default" target="_blank">WA</a>
                 <?php if ($antrian->konfirmasi == 't'): ?>
                     <a onclick="javasciprt: return confirm('Apakah kamu yakin ?')" href="app/update_konfirmasi/<?php echo $antrian->id_antrian ?>/y/<?php echo $this->input->get('tanggal') ?>" class="label label-warning">Konfirmasi</a>
                 <?php else: ?>
