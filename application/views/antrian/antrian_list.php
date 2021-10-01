@@ -82,7 +82,8 @@
 
                 <?php else: 
                   
-                  $no_wa = get_data('pasien','id_pasien',$antrian->id_pasien,'no_hp');
+                  $id_member = get_data('pasien','id_pasien',$antrian->id_pasien,'id_member');
+                  $no_wa = get_data('member','id_member',$id_member,'no_telp');
                   ?>
                 
                 <a href="https://api.whatsapp.com/send?phone=62<?php echo $no_wa ?>&text=Ini tes wa !" class="label label-default" target="_blank">WA</a>
