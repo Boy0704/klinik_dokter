@@ -124,11 +124,11 @@
     <div id="logreg-forms">
         <form class="form-signin" action="Login_user/auth" method="POST">
             <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Klinik Dokter</h1>
-            <div class="social-login">
+            <!-- <div class="social-login">
                 <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Login dengan Facebook</span> </button>
                 <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Login dengan Google</span> </button>
             </div>
-            <p style="text-align:center"> OR  </p>
+            <p style="text-align:center"> OR  </p> -->
             <input type="email" id="inputEmail" class="form-control" name="username" placeholder="Alamat Email" required="" autofocus="">
             <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required="">
             
@@ -146,14 +146,14 @@
             </form>
             
             <form action="app/daftar_user" method="POST" class="form-signup">
-                <div class="social-login">
+                <!-- <div class="social-login">
                     <a href="Login_user/login_fb" class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Daftar dengan Facebook</span> </a>
                 </div>
                 <div class="social-login">
                     <a href="Login_user/login_google" class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Daftar dengan Google</span> </a>
                 </div>
                 
-                <p style="text-align:center">OR</p>
+                <p style="text-align:center">OR</p> -->
 
                 <input type="email" id="user-email" name="email" class="form-control" placeholder="Email address" required autofocus="">
                 <input type="password" id="user-pass" name="password" class="form-control" placeholder="Password" required autofocus="">
