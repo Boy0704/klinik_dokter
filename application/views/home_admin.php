@@ -121,26 +121,7 @@ foreach ($pasien->result() as $rw) {
 		          <!-- /.info-box -->
 		        </div>
 
-		        <div class="col-md-4">
-		          <div class="info-box" style="border: solid 1px black;">
-		            <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
-
-		            <div class="info-box-content">
-		              <span class="info-box-text">Total </span>
-		              <span class="info-box-number">
-		              	<?php 
-		              	$this->db->where('id_jadwal', $rw->id_jadwal);
-		              	$this->db->where('tgl_kunjungan', $rw->tgl_kunjungan);
-		              	$this->db->where('date_konfirmasi!=', '');
-		              	$total = $this->db->get('antrian')->num_rows();
-		              	echo $total;
-		              	 ?>
-		              </span>
-		            </div>
-		            <!-- /.info-box-content -->
-		          </div>
-		          <!-- /.info-box -->
-		        </div>
+		        
 		        
 			</div>
 			<?php endif ?>
