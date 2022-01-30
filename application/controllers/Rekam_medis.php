@@ -15,6 +15,84 @@ class Rekam_medis extends CI_Controller
         }
     }
 
+    public function get_form_pembayaran($id_antrian,$id_invoice)
+    {
+        // if (empty($_SESSION['add_inv'])) {
+        //     $_SESSION['add_inv'] = 1;
+        // } else {
+        //     $_SESSION['add_inv'] = $_SESSION['add_inv'] + 1;
+        // }
+        // $no = $_SESSION['add_inv'];
+        if (get_last_id_detail_inv() == 1) {
+            $no = get_last_id_detail_inv();
+        } else {
+            $no = get_last_id_detail_inv() + 1;
+        }
+        $this->db->insert('invoice_detail', array(
+            'id_detail_inv' => $no,
+            'id_invoice' => $id_invoice
+        ));
+        
+        ?>
+        <tr id="br<?php echo $no ?>">
+            <td>
+
+                <select class="form-control select2" onchange="pilih_jenis('<?php echo $id_antrian ?>','<?php echo $id_invoice ?>','<?php echo $no ?>')" name="id_jenis_bayar[]" id="jenis_bayar<?php echo $no ?>">
+                    <option value="0">Pilih Jenis Biaya</option>
+                    <?php foreach ($this->db->get('jenis_bayar')->result() as $rw): ?>
+                        <option value="<?php echo $rw->id_jenis_bayar ?>"><?php echo $rw->jenis_bayar ?></option>
+                    <?php endforeach ?>
+                </select>
+            </td>
+            <td>
+                <span id="harga<?php echo $no ?>"></span>
+            </td>
+            <td>
+                <span class="btn btn-xs btn-danger" onclick="remove('<?php echo $id_antrian ?>','<?php echo $id_invoice ?>','<?php echo $no ?>')">
+                    <i class="fa fa-trash"></i>
+                </span>
+            </td>
+        </tr>
+        <?php
+    }
+
+    public function get_biaya($id_detail_inv)
+    {
+        $id = $this->input->post('id');
+        $jenis_bayar =  $this->db->get_where('jenis_bayar', ['id_jenis_bayar'=>$id])->row();
+        $this->db->where('id_detail_inv', $id_detail_inv);
+        $this->db->update('invoice_detail', ['id_jenis_bayar'=>$jenis_bayar->id_jenis_bayar]);
+        echo $jenis_bayar->harga;
+    }
+
+    public function remove_invoice_detail($id_detail_inv)
+    {
+        $this->db->where('id_detail_inv', $id_detail_inv);
+        $this->db->delete('invoice_detail');
+    }
+
+    public function total_detail_inv($id_invoice)
+    {
+        $total = 0;
+        $this->db->where('id_invoice', $id_invoice);
+        foreach ($this->db->get('invoice_detail')->result() as $rw) {
+            $total = $total + get_data('jenis_bayar','id_jenis_bayar',$rw->id_jenis_bayar,'harga');
+        }
+        echo $total;
+    }
+
+    public function update_pembayaran($id_invoice)
+    {
+        $total = $this->input->post('total');
+        $dibayar = $this->input->post('dibayar');
+        $sisa = $this->input->post('sisa');
+
+        $_POST['updated_at'] = get_waktu();
+
+        $this->db->where('id_invoice', $id_invoice);
+        $this->db->update('invoice', $_POST);
+    }
+
     public function index()
     {
         // $q = urldecode($this->input->get('q', TRUE));

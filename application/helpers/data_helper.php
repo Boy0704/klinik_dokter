@@ -1,5 +1,19 @@
 <?php 
 
+function get_last_id_detail_inv()
+{
+	$CI =& get_instance();
+	$CI->db->order_by('id_detail_inv', 'desc');
+	$cek = $CI->db->get('invoice_detail');
+	if ($cek->num_rows() == 1) {
+		return $cek->row()->id_detail_inv + 1;
+	} elseif ($cek->num_rows() > 1) {
+		return $cek->row()->id_detail_inv;
+	} else {
+		return 1;
+	}
+}
+
 function alert_notif($pesan,$type)
 {
 	return "<div class=\"alert alert-$type fade in alert-radius-bordered alert-shadowed\">
@@ -30,9 +44,11 @@ function siteURL() {
 function api($value)
 {
 	if ($value == 'login_fb') {
-		return '701355177153874, 10c9e248729110d46d06f40f5acb56b8';
+		// return '701355177153874, 10c9e248729110d46d06f40f5acb56b8';
+		return '1794882023993743, 18d3188afc60c0f31518342a87aedf23';
 	} elseif ($value == 'login_google') {
-		return '636707262351-sl58b3he6rkitp08722t1oj6vkhd5von.apps.googleusercontent.com, dYeGNNwrm_TzzJY__1pvGhQv';
+		// return '636707262351-sl58b3he6rkitp08722t1oj6vkhd5von.apps.googleusercontent.com, dYeGNNwrm_TzzJY__1pvGhQv';
+		return '811302971088-laha3mgvlbq7t5t307jmje0m323pgu95.apps.googleusercontent.com, HXwyPUMuNf9A4HQCnXbEeLg_';
 	}
 }
 

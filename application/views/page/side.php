@@ -35,7 +35,8 @@
         <li><a href="member"><i class="fa fa-address-card"></i> <span>Data Member  </span></a></li>
         <li><a href="jadwal"><i class="fa fa-calendar-check-o"></i> <span>Data Jadwal  </span></a></li>
         <li><a href="rekam_medis"><i class="fa fa-book"></i> <span>Rekam Medis </span></a></li>
-        <li><a href="pembayaran"><i class="fa fa-money"></i> <span>Transaksi Pembayaran </span></a></li>
+        <li><a href="jenis_bayar"><i class="fa fa-file"></i> <span>Jenis Bayar </span></a></li>
+        <!-- <li><a href="pembayaran"><i class="fa fa-money"></i> <span>Transaksi Pembayaran </span></a></li> -->
         <li><a href="app/cetak"><i class="fa fa-print"></i> <span>Cetak Laporan </span></a></li>
         <li><a href="a_user"><i class="fa fa-users"></i> <span>Data User </span></a></li>
         <li><a href="app/setting"><i class="fa fa-gear"></i> <span>Setting </span></a></li>
