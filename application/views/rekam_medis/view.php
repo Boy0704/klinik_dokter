@@ -33,7 +33,7 @@
 				$where = '';
 				if (isset($_GET['tgl_kunjungan'])) {
 					$tgl_kunjungan = $this->input->get('tgl_kunjungan');
-					$where = "AND antrian.tgl_kunjungan ='$tgl_kunjungan' ";
+					$where = "AND antrian.tgl_kunjungan ='$tgl_kunjungan' GROUP BY antrian.tgl_kunjungan ORDER BY antrian.tgl_kunjungan DESC ";
 				}
 				$sql = "SELECT pasien.*, antrian.tgl_kunjungan  FROM pasien INNER JOIN antrian ON pasien.id_pasien=antrian.id_pasien where antrian.id_jadwal !='' $where ";
 				foreach ($this->db->query($sql)->result() as $rw):
