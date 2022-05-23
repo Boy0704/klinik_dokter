@@ -38,7 +38,7 @@
 
 						$no = 1;
 						$this->db->where('id_member', $this->session->userdata('id_user'));
-						$this->db->where('aktif','1');
+						// $this->db->where('aktif','1');
 						$this->db->order_by('id_pasien', 'desc');
 						$pasien = $this->db->get('pasien');
 						foreach ($pasien->result() as $rw) {
